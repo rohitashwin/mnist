@@ -18,6 +18,9 @@ Trained on M1 GPU with Metal Performance Shader api for PyTorch (Training time: 
 ### Disadvantages
 - The model is a bit overfit and produces wrong results about 5% of the time
 
+### How to run?
+- The only requirement is that I need to be running the server
+
 ### Screenshots
 
 <img width="909" alt="SSH" src="https://user-images.githubusercontent.com/119449399/210156381-ac0fd37d-78bd-4bf6-978d-6f6e8bda8545.png">

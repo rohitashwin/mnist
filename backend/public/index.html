@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Try mnist</title>
+  </head>
+  <body>
+    <h1>Handwriting Recognition</h1>
+    <p>
+      I used PyTorch to train a neural network on the MNIST dataset, to do
+      handwritten digit recognition. This was trained on an M1 Macbook Pro using
+      Metal Performance Shader device. The training time was around 1 minute on
+      the MPS and around 10 minutes on the CPU which is a good improvement.
+	  <br>
+	  <br>
+	  The architecture of the neural network is as follows:
+
+	<br>
+		Convolutional :: Maxpool :: Convolutional :: Maxpool :: Fully Connected :: Fully Connected :: Softmax
+    </p>
+    <p>
+      Start by clicking and dragging inside the box to draw a digit, and then
+      perform handwriting recognition.
+    </p>
+    <div id="root">
+      <div class="grid"></div>
+      <div class="output"></div>
+    </div>
+    <div class="controls">
+      <button class="clear-button">Clear</button>
+      <button class="recognize-button">Recognize</button>
+    </div>
+    <div><p class="result">Result:</p></div>
+    <script src="index.js"></script>
+  </body>
+</html>

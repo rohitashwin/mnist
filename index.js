@@ -15,8 +15,9 @@ app.post('/predict', async (req, res) => {
 	const image = req.body.image;
 	// write the json content to a file
 	await fs.writeFile('image.json', JSON.stringify(image));
+	console.log('Writing image to file');
 	// spawn a python process to run the prediction
-	const python = exec('python3 ../python/main.py --predict --image image.json --model ../python/model.pth', (err, stdout, stderr) => {
+	const python = exec('python3 ./python/main.py --predict --image image.json --model ./python/model.pth', (err, stdout, stderr) => {
 		if (err) {
 			console.log(err);
 			return;
@@ -26,10 +27,12 @@ app.post('/predict', async (req, res) => {
 		}
 		console.log(stdout);
 		res.send(JSON.stringify(stdout));
+		console.log(stdout);
 	});
-	// send the response back to the frontend
 });
 
-app.listen(3001, () => {
-	  console.log('Server running on port 3001');
+const PORT = process.env.PORT || 8080;
+
+app.listen(PORT, () => {
+	  console.log(`Server listening on port ${PORT}...`);
 });

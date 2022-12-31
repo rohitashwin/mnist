@@ -123,6 +123,7 @@ function recogonize(event) {
       result.innerHTML = `Result: ${data}`;
       button.disabled = false;
     }).catch((error) => {
+		console.log(error);
 		const result = document.querySelector(".result");
 		result.innerHTML = `There was a problem connecting to the server, please try again later`;
 	  button.disabled = true;

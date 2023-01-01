@@ -1,7 +1,8 @@
 const express = require('express');
 const fs = require('fs/promises');
-const { spawn, exec } = require('child_process');
+const { exec } = require('child_process');
 const dotenv = require('dotenv');
+const findPort = require('find-open-port');
 
 dotenv.config();
 const app = express();
@@ -17,7 +18,7 @@ app.post('/predict', async (req, res) => {
 	await fs.writeFile('image.json', JSON.stringify(image));
 	console.log('Writing image to file');
 	// spawn a python process to run the prediction
-	const python = exec('python3 ../python/main.py --predict --image image.json --model ../python/model.pth', (err, stdout, stderr) => {
+	const python = exec('python3 ./python/main.py --predict --image image.json --model ./python/model.pth', (err, stdout, stderr) => {
 		if (err) {
 			console.log(err);
 			return;
@@ -31,8 +32,8 @@ app.post('/predict', async (req, res) => {
 	});
 });
 
-const PORT = process.env.PORT || 8080;
-
-app.listen(PORT, () => {
-	  console.log(`Server listening on port ${PORT}...`);
+findPort().then((port) => {
+	app.listen(port, () => {
+		console.log(`Listening on port ${port}`);
+	});
 });

@@ -141,8 +141,11 @@ body {
 }
 
 .numbers > p.max {
-	color: royalblue;
+	color: white;
 	font-weight: bolder;
+	background-color: royalblue;
+	border-radius: 50%;
+	padding: 3px 7px;
 }
 
 .result-bar {

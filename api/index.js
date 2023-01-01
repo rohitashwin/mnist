@@ -17,7 +17,7 @@ app.post('/predict', async (req, res) => {
 	await fs.writeFile('image.json', JSON.stringify(image));
 	console.log('Writing image to file');
 	// spawn a python process to run the prediction
-	const python = exec('python3 ./python/main.py --predict --image image.json --model ./python/model.pth', (err, stdout, stderr) => {
+	const python = exec('python3 ../python/main.py --predict --image image.json --model ../python/model.pth', (err, stdout, stderr) => {
 		if (err) {
 			console.log(err);
 			return;

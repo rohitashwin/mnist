@@ -1,7 +1,6 @@
 # MNIST Digit Recognition
 
-### Training Information
-Trained on M1 GPU with Metal Performance Shader api for PyTorch (Training time: 3 mins with GPU using MPS and about 27 mins on CPU) 
+A website to demonstrate handwritten digit recognition
 
 ### How to run?
 

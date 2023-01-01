@@ -24,6 +24,8 @@ function initCells() {
     cell.setAttribute("class", "cell");
     cell.addEventListener("mousedown", cellMouseDown);
     cell.addEventListener("mousemove", cellMouseMove);
+    cell.addEventListener("mouseover", mouseHover);
+    cell.addEventListener("mouseout", mouseOut);
     window.addEventListener("mouseup", cellMouseUp);
   }
 }
@@ -99,6 +101,46 @@ function cellMouseUp(event) {
   drag = false;
 }
 
+function mouseHover(event) {
+  const cell = event.target;
+  const location = getLocation(cell);
+  for (let i = -1; i <= 1; ++i) {
+    for (let j = -1; j <= 1; ++j) {
+      const x = location.cellX + i;
+      const y = location.cellY + j;
+      if (x >= 0 && x < 28 && y >= 0 && y < 28) {
+        const cell = document.querySelector(`[cellx="${x}"][celly="${y}"]`);
+        // if active then the class list should be cell, active, hover otherwise cell, hover
+        if (cell.classList.contains("active")) {
+          cell.setAttribute("class", "cell active hover");
+        } else {
+          cell.setAttribute("class", "cell hover");
+        }
+      }
+    }
+  }
+}
+
+function mouseOut(event) {
+  const cell = event.target;
+  const location = getLocation(cell);
+  for (let i = -1; i <= 1; ++i) {
+    for (let j = -1; j <= 1; ++j) {
+      const x = location.cellX + i;
+      const y = location.cellY + j;
+      if (x >= 0 && x < 28 && y >= 0 && y < 28) {
+        const cell = document.querySelector(`[cellx="${x}"][celly="${y}"]`);
+        // if active then the class list should be cell, active, hover otherwise cell, hover
+        if (cell.classList.contains("active")) {
+          cell.setAttribute("class", "cell active");
+        } else {
+          cell.setAttribute("class", "cell");
+        }
+      }
+    }
+  }
+}
+
 function recogonize(event) {
   // send the cellArray to the backend
   // disable the button to prevent multiple requests
@@ -120,14 +162,55 @@ function recogonize(event) {
     .then((data) => {
       console.log(data);
       const result = document.querySelector(".result");
-      result.innerHTML = `Result: ${data}`;
+      const list = JSON.parse(data);
+      // min max normalization
+      let max = Math.max(...list);
+      let min = Math.min(...list);
+      min = 2 * min;
+      let oldMax = max;
+      max += Math.abs(min);
+      for (let i = 0; i < list.length; ++i) {
+        list[i] = (list[i] - min) / (max - min);
+      }
+      console.log(list);
+      result.innerHTML = "";
+      // find the max value
+      let maxIndex = 0;
+      let currMax = -1;
+      for (let i = 0; i < list.length; ++i) {
+        if (list[i] > currMax) {
+          currMax = list[i];
+          maxIndex = i;
+        }
+      }
+      for (let i = 0; i < list.length; ++i) {
+        // if its the max value then add a class of max
+        const div = document.createElement("div");
+        div.setAttribute("class", "result-bar");
+        if (i === maxIndex) {
+          div.setAttribute("class", "result-bar max");
+        }
+        div.style.height = `${list[i] * 100}%`;
+        result.appendChild(div);
+      }
+      // set the class of the numbers to max corresponding to the maxIndex
+      const numbers = document.querySelectorAll(".numbers>p");
+      for (let i = 0; i < numbers.length; ++i) {
+        if (i === maxIndex) {
+          numbers[i].setAttribute("class", "max");
+        } else {
+          numbers[i].setAttribute("class", "");
+        }
+      }
+
       button.disabled = false;
-    }).catch((error) => {
-		console.log(error);
-		const result = document.querySelector(".result");
-		result.innerHTML = `There was a problem connecting to the server, please try again later`;
-	  button.disabled = true;
-	});		
+    })
+    .catch((error) => {
+      console.log(error);
+      const result = document.querySelector(".result");
+      result.innerHTML = `error`;
+      button.disabled = true;
+    });
 }
 
 main();

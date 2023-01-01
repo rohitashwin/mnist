@@ -1,0 +1,6 @@
+# Pip requirements for mnist example
+numpy
+torch
+torchvision
+tqdm
+matplotlib

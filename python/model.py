@@ -25,5 +25,3 @@ class CustomNet(nn.Module):
 		x = x.view(x.size(0), 1, 28, 28)
 		x = self.layers(x)
 		return x
-
-	# what is the input shape of the model for mnist for 64 batchsize: 64, 1, 28, 28 where 

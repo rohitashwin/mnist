@@ -114,7 +114,8 @@ def predict(image, model_path):
 	# make prediction
 	with torch.no_grad():
 		outputs = model(image)
-		return np.argmax(outputs.to('cpu').numpy())
+		outputs = outputs.to("cpu").numpy()
+		return outputs
 
 if __name__ == '__main__':
 	# parse args, the predict flag should receive an file with 28x28 pixels representing a number
@@ -135,10 +136,8 @@ if __name__ == '__main__':
 		image = json.load(jsonfile)
 		image = torch.tensor(image)
 		image = image.view(1, 1, 28, 28)
-		# save the image pixel values to a file
-		with open('image.txt', 'w') as f:
-			for i in range(28):
-				for j in range(28):
-					f.write(str(image[0][0][i][j].item()) + ' ')
-				f.write('\n')
-		print(predict(image, args.model))
+		probs = predict(image, args.model)
+		# convert the probs numpy array to a list and then to a json string
+		probs = probs[0].tolist()
+		# print the list with 2 decimal places
+		print(json.dumps(probs, indent=2, sort_keys=True, default=str))

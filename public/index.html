@@ -7,31 +7,59 @@
   </head>
   <body>
     <h1>Handwriting Recognition</h1>
-    <p>
-      I used PyTorch to train a neural network on the MNIST dataset, to do
-      handwritten digit recognition. This was trained on an M1 Macbook Pro using
-      Metal Performance Shader device. The training time was around 1 minute on
-      the MPS and around 10 minutes on the CPU which is a good improvement.
-	  <br>
-	  <br>
-	  The architecture of the neural network is as follows:
-
-	<br>
-		Convolutional :: Maxpool :: Convolutional :: Maxpool :: Fully Connected :: Fully Connected :: Softmax
-    </p>
-    <p>
-      Start by clicking and dragging inside the box to draw a digit, and then
-      perform handwriting recognition.
-    </p>
     <div id="root">
-      <div class="grid"></div>
-      <div class="output"></div>
+      <p>
+        I used PyTorch to train a neural network on the MNIST dataset, to do
+        handwritten digit recognition. This was trained on an M1 Macbook Pro
+        using Metal Performance Shader device. The training time was around 1
+        minute on the MPS and around 10 minutes on the CPU which is a good
+        improvement.
+        <br />
+        <br />
+        The architecture of the neural network is as follows:
+
+        <br />
+        Convolutional :: Maxpool :: Convolutional :: Maxpool :: Fully Connected
+        :: Fully Connected :: Softmax
+      </p>
+      <p>
+        Start by clicking and dragging inside the box to draw a digit, and then
+        perform handwriting recognition.
+      </p>
+      <div class="recognizer">
+        <div class="grid"></div>
+        <div class="results-container">
+          <div class="result">
+            <div height="0%"></div>
+            <div height="0%"></div>
+            <div height="0%"></div>
+            <div height="0%"></div>
+            <div height="0%"></div>
+            <div height="0%"></div>
+            <div height="0%"></div>
+            <div height="0%"></div>
+            <div height="0%"></div>
+            <div height="0%"></div>
+          </div>
+          <div class="numbers">
+            <p>0</p>
+            <p>1</p>
+            <p>2</p>
+            <p>3</p>
+            <p>4</p>
+            <p>5</p>
+            <p>6</p>
+            <p>7</p>
+            <p>8</p>
+            <p>9</p>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="controls">
       <button class="clear-button">Clear</button>
       <button class="recognize-button">Recognize</button>
     </div>
-    <div><p class="result">Result:</p></div>
     <script src="index.js"></script>
   </body>
 </html>
